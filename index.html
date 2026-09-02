@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kinetic AI Coach — Your Personal AI Fitness Companion</title>
+    <meta name="description"
+        content="Kinetic AI Coach — Meet Nova, your AI fitness coach. Personalized workouts, real-time guidance, and motivation." />
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%230a0a0f'/%3E%3Ccircle cx='50' cy='50' r='30' stroke='%23a78bfa' stroke-width='4' opacity='0.5'/%3E%3Cpath d='M50 30 L50 50 L64 58' stroke='%232dd4bf' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='50' cy='50' r='5' fill='%23a78bfa'/%3E%3C/svg%3E" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Kinetic AI Coach — Meet Nova, your AI fitness coach" />
+    <meta property="og:description"
+        content="A personalized workout in 30 seconds, live AI coaching mid-set, and a coach that actually adapts to how you feel. Try a free session." />
+    <!-- TODO before sharing: take a real screenshot of the recommendation or workout screen,
+         host it (e.g. in this repo), and add: <meta property="og:image" content="https://yoursite/preview.png" />
+         A real screenshot will convert better than no image at all. -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Kinetic AI Coach — Meet Nova, your AI fitness coach" />
+    <meta name="twitter:description"
+        content="A personalized workout in 30 seconds, live AI coaching mid-set, and a coach that adapts to how you feel." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div id="app">
+        <div class="bg-gradient"></div>
+        <div class="bg-orbs">
+            <div class="orb orb-purple"></div>
+            <div class="orb orb-teal"></div>
+            <div class="orb orb-pink"></div>
+        </div>
+
+        <section id="screen-welcome" class="screen active">
+            <div class="welcome-container">
+                <div class="avatar-wrap">
+                    <div class="avatar-ring"></div>
+                    <div class="avatar-ring avatar-ring-2"></div>
+                    <div class="avatar">
+                        <div class="avatar-core">
+                            <div class="avatar-pulse"></div>
+                            <div class="avatar-pulse avatar-pulse-2"></div>
+                            <div class="avatar-icon">
+                                <div class="nova-face state-idle" id="novaFaceWelcome" style="width:64px;height:64px;">
+                                    <svg viewBox="0 0 100 100" class="nf-svg">
+                                        <defs>
+                                            <linearGradient id="nfg-welcome" x1="0" y1="0" x2="100" y2="100">
+                                                <stop offset="0%" stop-color="#a78bfa" />
+                                                <stop offset="100%" stop-color="#2dd4bf" />
+                                            </linearGradient>
+                                        </defs>
+                                        <g class="nf-eyes">
+                                            <ellipse class="nf-eye" cx="37" cy="46" rx="6" ry="8" fill="url(#nfg-welcome)" />
+                                            <ellipse class="nf-eye" cx="63" cy="46" rx="6" ry="8" fill="url(#nfg-welcome)" />
+                                        </g>
+                                        <g class="nf-eyes-happy">
+                                            <path d="M29 48 Q37 38 45 48" stroke="url(#nfg-welcome)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                            <path d="M55 48 Q63 38 71 48" stroke="url(#nfg-welcome)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                        </g>
+                                        <path class="nf-mouth nf-mouth-idle" d="M39 64 Q50 70 61 64" stroke="url(#nfg-welcome)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                        <ellipse class="nf-mouth nf-mouth-talk" cx="50" cy="65" rx="9" ry="6" fill="url(#nfg-welcome)" />
+                                        <g class="nf-mouth nf-mouth-thinking">
+                                            <circle class="nf-dot nf-dot-1" cx="42" cy="65" r="3" fill="url(#nfg-welcome)" />
+                                            <circle class="nf-dot nf-dot-2" cx="50" cy="65" r="3" fill="url(#nfg-welcome)" />
+                                            <circle class="nf-dot nf-dot-3" cx="58" cy="65" r="3" fill="url(#nfg-welcome)" />
+                                        </g>
+                                        <path class="nf-mouth nf-mouth-happy" d="M35 61 Q50 80 65 61 Q50 71 35 61 Z" fill="url(#nfg-welcome)" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h1 class="app-title">Kinetic AI Coach</h1>
+                <p class="app-tagline">Your personal AI fitness companion</p>
+                <div class="welcome-nova">
+                    <div class="nova-bubble">
+                        <p>Hi, I'm <strong>Nova</strong> 👋</p>
+                        <p>I'll craft a workout tailored to your goals, mood, and energy — then guide you through every
+                            rep.</p>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-large" onclick="goToScreen('onboarding')">
+                    <span>Start with Nova</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <p class="welcome-footnote">No sign-up required · Your data stays in your browser</p>
+                <div class="quick-benefits">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🧠</div>
+                        <div>
+                            <h4>AI Personalization</h4>
+                            <p>Nova creates workouts based on your mood, goal and energy level.</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🛡️</div>
+                        <div>
+                            <h4>Safety First</h4>
+                            <p>Exercises adapt when they're too difficult and encourage healthy breaks.</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🔥</div>
+                        <div>
+                            <h4>Stay Consistent</h4>
+                            <p>Track streaks, calories burned and daily progress after every workout.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="screen-onboarding" class="screen">
+            <div class="onboarding-container">
+                <div class="step-indicator">
+                    <div class="step-dot active" data-step="1"></div>
+                    <div class="step-dot" data-step="2"></div>
+                    <div class="step-dot" data-step="3"></div>
+                    <div class="step-dot" data-step="4"></div>
+                </div>
+
+                <div class="onboard-step active" data-step="1">
+                    <h2 class="step-title">What's your main goal today?</h2>
+                    <p class="step-sub">Nova will tailor every exercise to this target.</p>
+                    <div class="choice-grid">
+                        <button class="choice-card" data-value="weight-loss"
+                            onclick="selectChoice(this, 'goal', 'weight-loss')">
+                            <div class="choice-emoji">🔥</div>
+                            <div class="choice-label">Weight Loss</div>
+                            <div class="choice-desc">Burn fat, boost cardio</div>
+                        </button>
+                        <button class="choice-card" data-value="muscle-gain"
+                            onclick="selectChoice(this, 'goal', 'muscle-gain')">
+                            <div class="choice-emoji">💪</div>
+                            <div class="choice-label">Muscle Gain</div>
+                            <div class="choice-desc">Build strength & size</div>
+                        </button>
+                        <button class="choice-card" data-value="endurance"
+                            onclick="selectChoice(this, 'goal', 'endurance')">
+                            <div class="choice-emoji">⚡</div>
+                            <div class="choice-label">Endurance</div>
+                            <div class="choice-desc">Stamina & conditioning</div>
+                        </button>
+                        <button class="choice-card" data-value="flexibility"
+                            onclick="selectChoice(this, 'goal', 'flexibility')">
+                            <div class="choice-emoji">🧘</div>
+                            <div class="choice-label">Flexibility</div>
+                            <div class="choice-desc">Mobility & recovery</div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="onboard-step" data-step="2">
+                    <h2 class="step-title">How are you feeling?</h2>
+                    <p class="step-sub">Your mood helps Nova calibrate intensity.</p>
+                    <div class="choice-grid">
+                        <button class="choice-card" data-value="energized"
+                            onclick="selectChoice(this, 'mood', 'energized')">
+                            <div class="choice-emoji">🤩</div>
+                            <div class="choice-label">Energized</div>
+                            <div class="choice-desc">Ready to crush it</div>
+                        </button>
+                        <button class="choice-card" data-value="good" onclick="selectChoice(this, 'mood', 'good')">
+                            <div class="choice-emoji">😊</div>
+                            <div class="choice-label">Good</div>
+                            <div class="choice-desc">Feeling positive</div>
+                        </button>
+                        <button class="choice-card" data-value="tired" onclick="selectChoice(this, 'mood', 'tired')">
+                            <div class="choice-emoji">😴</div>
+                            <div class="choice-label">Tired</div>
+                            <div class="choice-desc">Low on fuel</div>
+                        </button>
+                        <button class="choice-card" data-value="stressed"
+                            onclick="selectChoice(this, 'mood', 'stressed')">
+                            <div class="choice-emoji">😣</div>
+                            <div class="choice-label">Stressed</div>
+                            <div class="choice-desc">Need to decompress</div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="onboard-step" data-step="3">
+                    <h2 class="step-title">What's your energy level?</h2>
+                    <p class="step-sub">Slide to tell Nova how much gas is in the tank.</p>
+                    <div class="energy-wrap">
+                        <div class="energy-emoji" id="energyEmoji">🔋</div>
+                        <div class="energy-value" id="energyValue">50%</div>
+                        <input type="range" min="10" max="100" value="50" step="5" id="energySlider"
+                            oninput="updateEnergy(this.value)" />
+                        <div class="energy-labels">
+                            <span>Low</span>
+                            <span>Medium</span>
+                            <span>High</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="onboard-step" data-step="4">
+                    <h2 class="step-title">How long do you want to work out?</h2>
+                    <p class="step-sub">Pick a duration that fits your schedule.</p>
+                    <div class="choice-grid">
+                        <button class="choice-card" data-value="10" onclick="selectChoice(this, 'duration', '10')">
+                            <div class="choice-emoji">⏱️</div>
+                            <div class="choice-label">10 min</div>
+                            <div class="choice-desc">Quick burst</div>
+                        </button>
+                        <button class="choice-card" data-value="20" onclick="selectChoice(this, 'duration', '20')">
+                            <div class="choice-emoji">⏱️</div>
+                            <div class="choice-label">20 min</div>
+                            <div class="choice-desc">Balanced session</div>
+                        </button>
+                        <button class="choice-card" data-value="30" onclick="selectChoice(this, 'duration', '30')">
+                            <div class="choice-emoji">⏱️</div>
+                            <div class="choice-label">30 min</div>
+                            <div class="choice-desc">Full workout</div>
+                        </button>
+                        <button class="choice-card" data-value="45" onclick="selectChoice(this, 'duration', '45')">
+                            <div class="choice-emoji">⏱️</div>
+                            <div class="choice-label">45 min</div>
+                            <div class="choice-desc">Deep session</div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="onboard-nav">
+                    <button class="btn btn-ghost" id="backBtn" onclick="prevStep()">Back</button>
+                    <button class="btn btn-primary" id="nextBtn" onclick="nextStep()" disabled>Continue</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="screen-recommendation" class="screen">
+            <div class="reco-container">
+                <div class="nova-mini">
+                    <div class="nova-mini-avatar">
+                        <div class="nova-face state-idle" style="width:36px;height:36px;">
+                            <svg viewBox="0 0 100 100" class="nf-svg">
+                                <defs>
+                                    <linearGradient id="nfg-recohead" x1="0" y1="0" x2="100" y2="100">
+                                        <stop offset="0%" stop-color="#a78bfa" />
+                                        <stop offset="100%" stop-color="#2dd4bf" />
+                                    </linearGradient>
+                                </defs>
+                                <g class="nf-eyes">
+                                    <ellipse class="nf-eye" cx="37" cy="46" rx="6" ry="8" fill="url(#nfg-recohead)" />
+                                    <ellipse class="nf-eye" cx="63" cy="46" rx="6" ry="8" fill="url(#nfg-recohead)" />
+                                </g>
+                                <g class="nf-eyes-happy">
+                                    <path d="M29 48 Q37 38 45 48" stroke="url(#nfg-recohead)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                    <path d="M55 48 Q63 38 71 48" stroke="url(#nfg-recohead)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                </g>
+                                <path class="nf-mouth nf-mouth-idle" d="M39 64 Q50 70 61 64" stroke="url(#nfg-recohead)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                <ellipse class="nf-mouth nf-mouth-talk" cx="50" cy="65" rx="9" ry="6" fill="url(#nfg-recohead)" />
+                                <g class="nf-mouth nf-mouth-thinking">
+                                    <circle class="nf-dot nf-dot-1" cx="42" cy="65" r="3" fill="url(#nfg-recohead)" />
+                                    <circle class="nf-dot nf-dot-2" cx="50" cy="65" r="3" fill="url(#nfg-recohead)" />
+                                    <circle class="nf-dot nf-dot-3" cx="58" cy="65" r="3" fill="url(#nfg-recohead)" />
+                                </g>
+                                <path class="nf-mouth nf-mouth-happy" d="M35 61 Q50 80 65 61 Q50 71 35 61 Z" fill="url(#nfg-recohead)" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="nova-mini-text">
+                        <p class="nova-label">Nova recommends</p>
+                    </div>
+                </div>
+
+                <div class="reco-card glass" id="recoCard">
+                    <div class="reco-badge" id="recoBadge">PERSONALIZED PLAN</div>
+                    <h2 class="reco-title" id="recoTitle">Your Workout</h2>
+                    <p class="reco-desc" id="recoDesc">Tailored just for you.</p>
+                    <div class="reco-stats">
+                        <div class="reco-stat">
+                            <div class="reco-stat-icon">⏱️</div>
+                            <div class="reco-stat-val" id="recoDuration">20 min</div>
+                            <div class="reco-stat-label">Duration</div>
+                        </div>
+                        <div class="reco-stat">
+                            <div class="reco-stat-icon">🔥</div>
+                            <div class="reco-stat-val" id="recoCalories">180 kcal</div>
+                            <div class="reco-stat-label">Calories</div>
+                        </div>
+                        <div class="reco-stat">
+                            <div class="reco-stat-icon">📋</div>
+                            <div class="reco-stat-val" id="recoExercises">6</div>
+                            <div class="reco-stat-label">Exercises</div>
+                        </div>
+                        <div class="reco-stat">
+                            <div class="reco-stat-icon">📊</div>
+                            <div class="reco-stat-val" id="recoIntensity">Medium</div>
+                            <div class="reco-stat-label">Intensity</div>
+                        </div>
+                    </div>
+                    <div class="reco-exercises" id="recoExerciseList"></div>
+                    <div class="nova-message" id="recoNovaMsg">
+                        <div class="nova-msg-avatar">
+                            <div class="nova-face state-idle" id="novaFaceReco" style="width:100%;height:100%;">
+                                <svg viewBox="0 0 100 100" class="nf-svg">
+                                    <defs>
+                                        <linearGradient id="nfg-reco" x1="0" y1="0" x2="100" y2="100">
+                                            <stop offset="0%" stop-color="#a78bfa" />
+                                            <stop offset="100%" stop-color="#2dd4bf" />
+                                        </linearGradient>
+                                    </defs>
+                                    <g class="nf-eyes">
+                                        <ellipse class="nf-eye" cx="37" cy="46" rx="6" ry="8" fill="url(#nfg-reco)" />
+                                        <ellipse class="nf-eye" cx="63" cy="46" rx="6" ry="8" fill="url(#nfg-reco)" />
+                                    </g>
+                                    <g class="nf-eyes-happy">
+                                        <path d="M29 48 Q37 38 45 48" stroke="url(#nfg-reco)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                        <path d="M55 48 Q63 38 71 48" stroke="url(#nfg-reco)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                    </g>
+                                    <path class="nf-mouth nf-mouth-idle" d="M39 64 Q50 70 61 64" stroke="url(#nfg-reco)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                    <ellipse class="nf-mouth nf-mouth-talk" cx="50" cy="65" rx="9" ry="6" fill="url(#nfg-reco)" />
+                                    <g class="nf-mouth nf-mouth-thinking">
+                                        <circle class="nf-dot nf-dot-1" cx="42" cy="65" r="3" fill="url(#nfg-reco)" />
+                                        <circle class="nf-dot nf-dot-2" cx="50" cy="65" r="3" fill="url(#nfg-reco)" />
+                                        <circle class="nf-dot nf-dot-3" cx="58" cy="65" r="3" fill="url(#nfg-reco)" />
+                                    </g>
+                                    <path class="nf-mouth nf-mouth-happy" d="M35 61 Q50 80 65 61 Q50 71 35 61 Z" fill="url(#nfg-reco)" />
+                                </svg>
+                            </div>
+                        </div>
+                        <p id="recoNovaText">Let's do this! I'll be with you every step of the way.</p>
+                        <span class="ai-badge" id="recoAiBadge" hidden>✨ Live AI</span>
+                    </div>
+                    <button class="btn btn-primary btn-large" onclick="startWorkout()">
+                        <span>Start Workout</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M8 5v14l11-7z" fill="currentColor" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="screen-workout" class="screen">
+            <div class="workout-container">
+                <div class="workout-header">
+                    <button class="icon-btn" onclick="confirmExit()" title="Exit">✕</button>
+                    <div class="workout-progress-wrap">
+                        <div class="workout-progress-info">
+                            <span id="workoutExerciseNum">Exercise 1 of 6</span>
+                            <span id="workoutTimeRemaining">20:00</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="workoutProgressFill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exercise-card-wrap">
+                    <div class="exercise-card glass" id="exerciseCard">
+                        <div class="exercise-emoji" id="exerciseEmoji">🤸</div>
+                        <h2 class="exercise-name" id="exerciseName">Exercise</h2>
+                        <p class="exercise-desc" id="exerciseDesc">Let's go!</p>
+                        <div class="timer-wrap">
+                            <div class="timer-ring">
+                                <svg viewBox="0 0 200 200" width="200" height="200">
+                                    <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(255,255,255,0.08)"
+                                        stroke-width="10" />
+                                    <circle id="timerCircle" cx="100" cy="100" r="88" fill="none"
+                                        stroke="url(#timerGrad)" stroke-width="10" stroke-linecap="round"
+                                        stroke-dasharray="552.92" stroke-dashoffset="0"
+                                        transform="rotate(-90 100 100)" />
+                                    <defs>
+                                        <linearGradient id="timerGrad" x1="0" y1="0" x2="200" y2="200">
+                                            <stop offset="0%" stop-color="#a78bfa" />
+                                            <stop offset="100%" stop-color="#2dd4bf" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                                <div class="timer-text" id="timerText">30</div>
+                            </div>
+                        </div>
+                        <div class="exercise-meta" id="exerciseMeta">
+                            <span class="meta-chip">Set <strong id="metaSet">1</strong></span>
+                            <span class="meta-chip">Reps <strong id="metaReps">12</strong></span>
+                            <span class="meta-chip">Rest <strong id="metaRest">15s</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nova-live-msg-row">
+                    <div class="nova-live-msg" id="novaLiveMsg">
+                        <div class="nova-live-avatar">
+                            <div class="nova-face state-idle" id="novaFaceLive" style="width:28px;height:28px;">
+                                <svg viewBox="0 0 100 100" class="nf-svg">
+                                    <defs>
+                                        <linearGradient id="nfg-live" x1="0" y1="0" x2="100" y2="100">
+                                            <stop offset="0%" stop-color="#a78bfa" />
+                                            <stop offset="100%" stop-color="#2dd4bf" />
+                                        </linearGradient>
+                                    </defs>
+                                    <g class="nf-eyes">
+                                        <ellipse class="nf-eye" cx="37" cy="46" rx="6" ry="8" fill="url(#nfg-live)" />
+                                        <ellipse class="nf-eye" cx="63" cy="46" rx="6" ry="8" fill="url(#nfg-live)" />
+                                    </g>
+                                    <g class="nf-eyes-happy">
+                                        <path d="M29 48 Q37 38 45 48" stroke="url(#nfg-live)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                        <path d="M55 48 Q63 38 71 48" stroke="url(#nfg-live)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                    </g>
+                                    <path class="nf-mouth nf-mouth-idle" d="M39 64 Q50 70 61 64" stroke="url(#nfg-live)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                    <ellipse class="nf-mouth nf-mouth-talk" cx="50" cy="65" rx="9" ry="6" fill="url(#nfg-live)" />
+                                    <g class="nf-mouth nf-mouth-thinking">
+                                        <circle class="nf-dot nf-dot-1" cx="42" cy="65" r="3" fill="url(#nfg-live)" />
+                                        <circle class="nf-dot nf-dot-2" cx="50" cy="65" r="3" fill="url(#nfg-live)" />
+                                        <circle class="nf-dot nf-dot-3" cx="58" cy="65" r="3" fill="url(#nfg-live)" />
+                                    </g>
+                                    <path class="nf-mouth nf-mouth-happy" d="M35 61 Q50 80 65 61 Q50 71 35 61 Z" fill="url(#nfg-live)" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="nova-live-text" id="novaLiveText">Let's begin! You've got this. 💪</div>
+                    </div>
+                    <span class="ai-badge ai-badge-live" id="liveAiBadge" hidden>✨ Live AI</span>
+                </div>
+
+                <button class="ask-nova-toggle" id="askNovaToggle" onclick="toggleNovaChat()">
+                    <span>💬 Ask Nova</span>
+                </button>
+
+                <div class="nova-chat glass" id="novaChat">
+                    <div class="nova-chat-header">
+                        <div class="nova-chat-header-left">
+                            <div class="nova-face state-idle" id="novaFaceChat" style="width:22px;height:22px;">
+                                <svg viewBox="0 0 100 100" class="nf-svg">
+                                    <defs>
+                                        <linearGradient id="nfg-chat" x1="0" y1="0" x2="100" y2="100">
+                                            <stop offset="0%" stop-color="#a78bfa" />
+                                            <stop offset="100%" stop-color="#2dd4bf" />
+                                        </linearGradient>
+                                    </defs>
+                                    <g class="nf-eyes">
+                                        <ellipse class="nf-eye" cx="37" cy="46" rx="6" ry="8" fill="url(#nfg-chat)" />
+                                        <ellipse class="nf-eye" cx="63" cy="46" rx="6" ry="8" fill="url(#nfg-chat)" />
+                                    </g>
+                                    <g class="nf-eyes-happy">
+                                        <path d="M29 48 Q37 38 45 48" stroke="url(#nfg-chat)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                        <path d="M55 48 Q63 38 71 48" stroke="url(#nfg-chat)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                    </g>
+                                    <path class="nf-mouth nf-mouth-idle" d="M39 64 Q50 70 61 64" stroke="url(#nfg-chat)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                    <ellipse class="nf-mouth nf-mouth-talk" cx="50" cy="65" rx="9" ry="6" fill="url(#nfg-chat)" />
+                                    <g class="nf-mouth nf-mouth-thinking">
+                                        <circle class="nf-dot nf-dot-1" cx="42" cy="65" r="3" fill="url(#nfg-chat)" />
+                                        <circle class="nf-dot nf-dot-2" cx="50" cy="65" r="3" fill="url(#nfg-chat)" />
+                                        <circle class="nf-dot nf-dot-3" cx="58" cy="65" r="3" fill="url(#nfg-chat)" />
+                                    </g>
+                                    <path class="nf-mouth nf-mouth-happy" d="M35 61 Q50 80 65 61 Q50 71 35 61 Z" fill="url(#nfg-chat)" />
+                                </svg>
+                            </div>
+                            <span>Ask Nova a question</span>
+                        </div>
+                        <button class="icon-btn" onclick="toggleNovaChat()" title="Close">✕</button>
+                    </div>
+                    <div class="nova-chat-log" id="novaChatLog">
+                        <div class="chat-msg chat-msg-nova">Hey! Ask me about form, pacing, or how you're feeling — I'm listening. 🎧</div>
+                    </div>
+                    <div class="nova-chat-input-row">
+                        <input type="text" id="novaChatInput" placeholder="e.g. Is this move okay for my knees?" maxlength="300"
+                            onkeydown="if(event.key==='Enter'){sendNovaChat();}" />
+                        <button class="btn btn-primary" id="novaChatSend" onclick="sendNovaChat()">Send</button>
+                    </div>
+                </div>
+
+                <div class="workout-controls">
+                    <button class="ctrl-btn ctrl-hard" onclick="adjustDifficulty('easier')">
+                        <span class="ctrl-icon">🔥</span>
+                        <span class="ctrl-label">Too Hard</span>
+                    </button>
+                    <button class="ctrl-btn ctrl-break" onclick="takeBreak()">
+                        <span class="ctrl-icon">☕</span>
+                        <span class="ctrl-label">Take a Break</span>
+                    </button>
+                    <button class="ctrl-btn ctrl-easy" onclick="adjustDifficulty('harder')">
+                        <span class="ctrl-icon">🍃</span>
+                        <span class="ctrl-label">Too Easy</span>
+                    </button>
+                    <button class="ctrl-btn ctrl-skip" onclick="skipExercise()">
+                        <span class="ctrl-icon">⏭️</span>
+                        <span class="ctrl-label">Skip</span>
+                    </button>
+                </div>
+
+                <div class="break-overlay" id="breakOverlay">
+                    <div class="break-card glass">
+                        <div class="break-emoji">☕</div>
+                        <h3>Take a Breather</h3>
+                        <p>Resuming in <span id="breakCountdown">15</span>s</p>
+                        <div class="break-bar">
+                            <div class="break-bar-fill" id="breakBarFill"></div>
+                        </div>
+                        <button class="btn btn-primary" onclick="endBreak()">Resume Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="screen-completion" class="screen">
+            <div class="completion-container">
+                <div class="completion-celebrate">
+                    <div class="celebrate-burst"></div>
+                    <div class="celebrate-ring"></div>
+                    <div class="celebrate-emoji">🎉</div>
+                </div>
+                <h1 class="completion-title">Workout Complete!</h1>
+                <p class="completion-sub">Amazing work — Nova is proud of you!</p>
+                <div class="nova-reflection glass" id="novaReflection">
+                    <div class="reflection-head">
+                        <div class="nova-msg-avatar">
+                            <div class="nova-face state-idle" id="novaFaceReflection" style="width:100%;height:100%;">
+                                <svg viewBox="0 0 100 100" class="nf-svg">
+                                    <defs>
+                                        <linearGradient id="nfg-reflect" x1="0" y1="0" x2="100" y2="100">
+                                            <stop offset="0%" stop-color="#a78bfa" />
+                                            <stop offset="100%" stop-color="#2dd4bf" />
+                                        </linearGradient>
+                                    </defs>
+                                    <g class="nf-eyes">
+                                        <ellipse class="nf-eye" cx="37" cy="46" rx="6" ry="8" fill="url(#nfg-reflect)" />
+                                        <ellipse class="nf-eye" cx="63" cy="46" rx="6" ry="8" fill="url(#nfg-reflect)" />
+                                    </g>
+                                    <g class="nf-eyes-happy">
+                                        <path d="M29 48 Q37 38 45 48" stroke="url(#nfg-reflect)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                        <path d="M55 48 Q63 38 71 48" stroke="url(#nfg-reflect)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                    </g>
+                                    <path class="nf-mouth nf-mouth-idle" d="M39 64 Q50 70 61 64" stroke="url(#nfg-reflect)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                    <ellipse class="nf-mouth nf-mouth-talk" cx="50" cy="65" rx="9" ry="6" fill="url(#nfg-reflect)" />
+                                    <g class="nf-mouth nf-mouth-thinking">
+                                        <circle class="nf-dot nf-dot-1" cx="42" cy="65" r="3" fill="url(#nfg-reflect)" />
+                                        <circle class="nf-dot nf-dot-2" cx="50" cy="65" r="3" fill="url(#nfg-reflect)" />
+                                        <circle class="nf-dot nf-dot-3" cx="58" cy="65" r="3" fill="url(#nfg-reflect)" />
+                                    </g>
+                                    <path class="nf-mouth nf-mouth-happy" d="M35 61 Q50 80 65 61 Q50 71 35 61 Z" fill="url(#nfg-reflect)" />
+                                </svg>
+                            </div>
+                        </div>
+                        <span class="ai-badge" id="reflectionAiBadge" hidden>✨ Live AI</span>
+                    </div>
+                    <p id="reflectionText">Let's see how you did...</p>
+                </div>
+
+                <div class="completion-stats">
+                    <div class="comp-stat glass">
+                        <div class="comp-stat-emoji">🔥</div>
+                        <div class="comp-stat-value" id="compCalories">0</div>
+                        <div class="comp-stat-label">Calories Burned</div>
+                    </div>
+                    <div class="comp-stat glass">
+                        <div class="comp-stat-emoji">⏱️</div>
+                        <div class="comp-stat-value" id="compDuration">0m</div>
+                        <div class="comp-stat-label">Time Active</div>
+                    </div>
+                    <div class="comp-stat glass">
+                        <div class="comp-stat-emoji">📈</div>
+                        <div class="comp-stat-value" id="compStreak">1</div>
+                        <div class="comp-stat-label">Day Streak</div>
+                    </div>
+                    <div class="comp-stat glass">
+                        <div class="comp-stat-emoji">✅</div>
+                        <div class="comp-stat-value" id="compCompleted">0</div>
+                        <div class="comp-stat-label">Exercises Done</div>
+                    </div>
+                </div>
+
+                <div class="summary-card glass">
+                    <h3 class="summary-title">Workout Summary</h3>
+                    <div class="summary-list" id="summaryList"></div>
+                </div>
+
+                <div class="next-reco glass">
+                    <div class="next-reco-header">
+                        <div class="nova-mini-avatar">
+                            <div class="nova-face state-idle" style="width:32px;height:32px;">
+                                <svg viewBox="0 0 100 100" class="nf-svg">
+                                    <defs>
+                                        <linearGradient id="nfg-nextreco" x1="0" y1="0" x2="100" y2="100">
+                                            <stop offset="0%" stop-color="#a78bfa" />
+                                            <stop offset="100%" stop-color="#2dd4bf" />
+                                        </linearGradient>
+                                    </defs>
+                                    <g class="nf-eyes">
+                                        <ellipse class="nf-eye" cx="37" cy="46" rx="6" ry="8" fill="url(#nfg-nextreco)" />
+                                        <ellipse class="nf-eye" cx="63" cy="46" rx="6" ry="8" fill="url(#nfg-nextreco)" />
+                                    </g>
+                                    <g class="nf-eyes-happy">
+                                        <path d="M29 48 Q37 38 45 48" stroke="url(#nfg-nextreco)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                        <path d="M55 48 Q63 38 71 48" stroke="url(#nfg-nextreco)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                    </g>
+                                    <path class="nf-mouth nf-mouth-idle" d="M39 64 Q50 70 61 64" stroke="url(#nfg-nextreco)" stroke-width="4" fill="none" stroke-linecap="round" />
+                                    <ellipse class="nf-mouth nf-mouth-talk" cx="50" cy="65" rx="9" ry="6" fill="url(#nfg-nextreco)" />
+                                    <g class="nf-mouth nf-mouth-thinking">
+                                        <circle class="nf-dot nf-dot-1" cx="42" cy="65" r="3" fill="url(#nfg-nextreco)" />
+                                        <circle class="nf-dot nf-dot-2" cx="50" cy="65" r="3" fill="url(#nfg-nextreco)" />
+                                        <circle class="nf-dot nf-dot-3" cx="58" cy="65" r="3" fill="url(#nfg-nextreco)" />
+                                    </g>
+                                    <path class="nf-mouth nf-mouth-happy" d="M35 61 Q50 80 65 61 Q50 71 35 61 Z" fill="url(#nfg-nextreco)" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="next-reco-label">Nova's next recommendation</p>
+                            <h4 id="nextRecoTitle">Recovery Flow</h4>
+                        </div>
+                    </div>
+                    <p id="nextRecoDesc">Tomorrow, let's focus on active recovery with a gentle mobility routine.</p>
+                    <div class="next-reco-tags" id="nextRecoTags"></div>
+                </div>
+
+                <div class="feedback-card glass" id="feedbackCard">
+                    <h3 class="summary-title">How was this session?</h3>
+                    <div class="star-rating" id="starRating">
+                        <button class="star" data-val="1" onclick="setRating(1)">★</button>
+                        <button class="star" data-val="2" onclick="setRating(2)">★</button>
+                        <button class="star" data-val="3" onclick="setRating(3)">★</button>
+                        <button class="star" data-val="4" onclick="setRating(4)">★</button>
+                        <button class="star" data-val="5" onclick="setRating(5)">★</button>
+                    </div>
+                    <textarea id="feedbackComment" class="feedback-textarea" maxlength="500"
+                        placeholder="Anything Nova should know? (optional)"></textarea>
+                    <button class="btn btn-primary" id="submitFeedbackBtn" onclick="submitFeedback()">Send Feedback</button>
+                    <p class="feedback-thanks" id="feedbackThanks" hidden>Thanks — this genuinely helps us build a better coach. 💜</p>
+                </div>
+
+                <div class="waitlist-card glass" id="waitlistCard">
+                    <h3 class="summary-title">Want early access to Nova Pro?</h3>
+                    <p class="waitlist-sub">Voice coaching, custom meal pairing, and a weekly plan tuned to your streak.
+                        Drop your email and we'll notify you first.</p>
+                    <div class="waitlist-form">
+                        <input type="email" id="waitlistEmail" placeholder="you@example.com" />
+                        <button class="btn btn-ghost" id="waitlistBtn" onclick="joinWaitlist()">Notify Me</button>
+                    </div>
+                    <p class="waitlist-thanks" id="waitlistThanks" hidden>You're on the list! 🎉</p>
+                </div>
+
+                <div class="completion-actions">
+                    <button class="btn btn-primary btn-large" onclick="restartApp()">
+                        <span>New Workout</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 12a8 8 0 0 1 14-5.3L20 8M20 4v4h-4M20 12a8 8 0 0 1-14 5.3L4 16M4 20v-4h4"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <button class="btn btn-ghost btn-large" onclick="shareApp()" id="shareBtn">
+                        <span id="shareBtnLabel">Share Nova with a friend</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
